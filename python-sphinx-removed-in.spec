@@ -2,7 +2,7 @@
 
 Name:           python-%{pypi_name}
 Version:        0.1.3
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        versionremoved and removed-in directives for Sphinx
 License:        BSD
 URL:            https://github.com/MrSenko/sphinx-removed-in
@@ -50,6 +50,9 @@ rm -rf %{buildroot}%{python3_sitelib}/tests
 %{python3_sitelib}/sphinx_removed_in-%{version}-py%{python3_version}.egg-info/
 
 %changelog
+* Thu Oct 03 2019 Miro Hrončok <mhroncok@redhat.com> - 0.1.3-4
+- Rebuilt for Python 3.8.0rc1 (#1748018)
+
 * Sat Aug 17 2019 Miro Hrončok <mhroncok@redhat.com> - 0.1.3-3
 - Rebuilt for Python 3.8
 
