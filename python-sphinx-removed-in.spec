@@ -1,15 +1,12 @@
 %global pypi_name sphinx-removed-in
 
 Name:           python-%{pypi_name}
-Version:        0.1.3
-Release:        4%{?dist}
+Version:        0.2.0
+Release:        1%{?dist}
 Summary:        versionremoved and removed-in directives for Sphinx
 License:        BSD
 URL:            https://github.com/MrSenko/sphinx-removed-in
 Source0:        %{url}/archive/v%{version}/%{pypi_name}-%{version}.tar.gz
-
-# https://github.com/MrSenko/sphinx-removed-in/pull/6
-Patch1:         %{pypi_name}-sphinx2.patch
 
 BuildArch:      noarch
 
@@ -50,6 +47,10 @@ rm -rf %{buildroot}%{python3_sitelib}/tests
 %{python3_sitelib}/sphinx_removed_in-%{version}-py%{python3_version}.egg-info/
 
 %changelog
+* Fri Nov 08 2019 Ken Dreyer <kdreyer@redhat.com> 0.2.0-1
+- Update to 0.2.0 (rhbz#1697060)
+- Drop upstreamed patch
+
 * Thu Oct 03 2019 Miro Hrončok <mhroncok@redhat.com> - 0.1.3-4
 - Rebuilt for Python 3.8.0rc1 (#1748018)
 
