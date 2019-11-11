@@ -1,7 +1,7 @@
 %global pypi_name sphinx-removed-in
 
 Name:           python-%{pypi_name}
-Version:        0.2.0
+Version:        0.2.1
 Release:        1%{?dist}
 Summary:        versionremoved and removed-in directives for Sphinx
 License:        BSD
@@ -47,6 +47,9 @@ rm -rf %{buildroot}%{python3_sitelib}/tests
 %{python3_sitelib}/sphinx_removed_in-%{version}-py%{python3_version}.egg-info/
 
 %changelog
+* Mon Nov 11 2019 Ken Dreyer <kdreyer@redhat.com> - 0.2.1-1
+- Update to 0.2.1
+
 * Fri Nov 08 2019 Ken Dreyer <kdreyer@redhat.com> 0.2.0-1
 - Update to 0.2.0 (rhbz#1697060)
 - Drop upstreamed patch
