@@ -6,7 +6,7 @@ Release:        8%{?dist}
 Summary:        versionremoved and removed-in directives for Sphinx
 License:        BSD
 URL:            https://github.com/MrSenko/sphinx-removed-in
-Source0:        %{url}/archive/v%{version}/%{pypi_name}-%{version}.tar.gz
+Source:         %{url}/archive/v%{version}/%{pypi_name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
