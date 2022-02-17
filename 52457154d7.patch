@@ -1,0 +1,79 @@
+From 52457154d79c4a5332f1ab52d441b1474afbb3f0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Miro=20Hron=C4=8Dok?= <miro@hroncok.cz>
+Date: Thu, 17 Feb 2022 00:59:35 +0100
+Subject: [PATCH] Drop the dependency on sphinx-testing
+
+Fixes https://github.com/MrSenko/sphinx-removed-in/issues/8
+---
+ Makefile                |  2 +-
+ tests/conftest.py       |  1 +
+ tests/requirements.txt  |  2 +-
+ tests/test_extension.py | 24 +++++++++---------------
+ 4 files changed, 12 insertions(+), 17 deletions(-)
+ create mode 100644 tests/conftest.py
+
+diff --git a/Makefile b/Makefile
+index 9228c26..0fcb065 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+ test:
+ 	flake8 setup.py sphinx_removed_in tests
+-	python -m unittest discover -v
++	python -m pytest -v
+ 
+ build: test
+ 	./setup.py sdist
+diff --git a/tests/conftest.py b/tests/conftest.py
+new file mode 100644
+index 0000000..1ece6b4
+--- /dev/null
++++ b/tests/conftest.py
+@@ -0,0 +1 @@
++pytest_plugins = 'sphinx.testing.fixtures'
+diff --git a/tests/requirements.txt b/tests/requirements.txt
+index d1c2414..9761a27 100644
+--- a/tests/requirements.txt
++++ b/tests/requirements.txt
+@@ -1,4 +1,4 @@
+ Sphinx
+ flake8
+ coverage
+-sphinx-testing
++pytest
+diff --git a/tests/test_extension.py b/tests/test_extension.py
+index d184e7c..9bc574c 100644
+--- a/tests/test_extension.py
++++ b/tests/test_extension.py
+@@ -1,22 +1,16 @@
+ import os
+ import sys
+-import unittest
+-from sphinx_testing import with_app
++import pytest
+ 
+ 
+-sys.path.insert(0,
+-                os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
++PARENT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
++sys.path.insert(0, PARENT)
+ 
+ 
+-class TestExtension(unittest.TestCase):
+-    @with_app(buildername='html', srcdir='./docs', copy_srcdir_to_tmpdir=True)
+-    def test_sphinx_build(self, app, status, warning):
+-        app.build()
+-        html = (app.outdir / 'index.html').read_text()
++@pytest.mark.sphinx(buildername='html', srcdir=os.path.join(PARENT, 'docs'))
++def test_sphinx_build(app, status, warning):
++    app.build()
++    html = (app.outdir / 'index.html').read_text()
+ 
+-        self.assertIn('Removed in version 1.2', html)
+-        self.assertIn('Removed in version 3.2', html)
+-
+-
+-if __name__ == "__main__":
+-    unittest.main()
++    assert 'Removed in version 1.2' in html
++    assert 'Removed in version 3.2' in html

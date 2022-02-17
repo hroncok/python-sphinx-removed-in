@@ -2,18 +2,22 @@
 
 Name:           python-%{pypi_name}
 Version:        0.2.1
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        versionremoved and removed-in directives for Sphinx
 License:        BSD
 URL:            https://github.com/MrSenko/sphinx-removed-in
 Source:         %{url}/archive/v%{version}/%{pypi_name}-%{version}.tar.gz
+
+# Drop the dependency on deprecated sphinx-testing
+# From https://github.com/MrSenko/sphinx-removed-in/pull/9
+Patch:          %{url}/commit/52457154d7.patch
 
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-sphinx
-BuildRequires:  python3-sphinx-testing
+BuildRequires:  python3-pytest
 
 %description
 This is a Sphinx extension which recognizes the versionremoved and removed-in
@@ -38,7 +42,7 @@ directives.
 rm -rf %{buildroot}%{python3_sitelib}/tests
 
 %check
-%{__python3} setup.py test
+%pytest
 
 %files -n python3-%{pypi_name}
 %doc README.rst
@@ -47,6 +51,9 @@ rm -rf %{buildroot}%{python3_sitelib}/tests
 %{python3_sitelib}/sphinx_removed_in-%{version}-py%{python3_version}.egg-info/
 
 %changelog
+* Thu Feb 17 2022 Miro Hrončok <mhroncok@redhat.com> - 0.2.1-9
+- Drop the dependency on deprecated sphinx-testing
+
 * Fri Jan 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.1-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
