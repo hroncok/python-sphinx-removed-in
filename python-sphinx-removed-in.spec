@@ -39,6 +39,7 @@ directives.
 
 %install
 %py3_install
+# https://github.com/MrSenko/sphinx-removed-in/pull/10
 rm -rf %{buildroot}%{python3_sitelib}/tests
 
 %check
